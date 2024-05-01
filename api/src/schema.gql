@@ -1,0 +1,50 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type IsSuccessType {
+  isSuccess: Boolean!
+  error: String
+}
+
+type ImageType {
+  id: Int!
+  location: String
+}
+
+type UserType {
+  email: String!
+  id: Int!
+}
+
+type AuthResponseType {
+  token: String!
+  user: UserType!
+}
+
+type Query {
+  me: UserType!
+  imageConnection: [ImageType!]!
+  triggerImageUploadFromBackend: IsSuccessType!
+}
+
+type Mutation {
+  login(user: LoginInput!): AuthResponseType!
+  register(user: RegisterInput!): AuthResponseType!
+  uploadImage(image: ImageInput!): ImageType!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input RegisterInput {
+  email: String!
+  password: String!
+}
+
+input ImageInput {
+  blob: String!
+  location: String
+}
