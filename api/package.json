@@ -1,5 +1,5 @@
 {
-    "name": "@team-503/api",
+    "name": "@team-503/e-photo-album-api",
     "version": "1.0.0",
     "main": "./dist/index.js",
     "scripts": {
