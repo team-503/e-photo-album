@@ -30,13 +30,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         return req.cookies?.auth
     }
 
-    async validate(payload: { sub: number; iat: number; exp: number }) {
-        if (!payload.sub) {
+    async validate(payload: { userId: number; iat: number; exp: number }) {
+        if (!payload.userId) {
             throw new UnauthorizedException('[Auth] Invalid token')
         }
         const user = await this.userRepo.findOne({
             where: {
-                id: payload.sub,
+                id: payload.userId,
             },
         })
         if (!user) {

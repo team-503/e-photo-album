@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type AlbumType {
+  name: String!
+  id: Int!
+}
+
 type IsSuccessType {
   isSuccess: Boolean!
   error: String
@@ -24,14 +29,20 @@ type AuthResponseType {
 
 type Query {
   me: UserType!
-  imageConnection: [ImageType!]!
+  imageConnection(filters: ImageConnectionFiltersType): [ImageType!]!
   triggerImageUploadFromBackend: IsSuccessType!
+  albumConnection: [AlbumType!]!
+}
+
+input ImageConnectionFiltersType {
+  albumId: Int
 }
 
 type Mutation {
   login(user: LoginInput!): AuthResponseType!
   register(user: RegisterInput!): AuthResponseType!
   uploadImage(image: ImageInput!): ImageType!
+  createAlbum(album: AlbumInput!): AlbumType!
 }
 
 input LoginInput {
@@ -47,4 +58,8 @@ input RegisterInput {
 input ImageInput {
   blob: String!
   location: String
+}
+
+input AlbumInput {
+  name: String!
 }

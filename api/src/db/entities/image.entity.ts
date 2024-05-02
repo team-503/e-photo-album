@@ -10,6 +10,9 @@ export class ImageEntity {
     @Column()
     blob: Buffer
 
+    @Column()
+    blobPreview: Buffer
+
     @Column({ nullable: true })
     location?: string
 

@@ -2,20 +2,24 @@ import { CurrentUser } from '@/auth/decorators/current-user.decorator'
 import { GqlAuthGuard } from '@/auth/guards/gql-auth.guard'
 import { IsSuccessType } from '@/common/is-success.type'
 import { UserEntity } from '@/db/entities/user.entity'
+import { ImageConnectionFiltersType } from '@/endpoints/image/dto/image-connection-filters.type'
 import { ImageInput, ImageType } from '@/endpoints/image/dto/image.type'
 import { ImageService } from '@/endpoints/image/image.service'
 import { UseGuards } from '@nestjs/common'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { readFileSync } from 'fs'
 
-@UseGuards(GqlAuthGuard)
 @Resolver(() => ImageType)
+@UseGuards(GqlAuthGuard)
 export class ImageResolver {
     constructor(private readonly imageService: ImageService) {}
 
     @Query(() => [ImageType])
-    async imageConnection(@CurrentUser() currentUser: UserEntity): Promise<ImageType[]> {
-        return this.imageService.imageConnection(currentUser)
+    async imageConnection(
+        @Args({ name: 'filters', type: () => ImageConnectionFiltersType, nullable: true }) filters: ImageConnectionFiltersType,
+        @CurrentUser() currentUser: UserEntity,
+    ): Promise<ImageType[]> {
+        return this.imageService.imageConnection(filters, currentUser)
     }
 
     @Mutation(() => ImageType)
@@ -33,7 +37,7 @@ export class ImageResolver {
     // FIXME: TEST ONLY
     @Query(() => IsSuccessType)
     async triggerImageUploadFromBackend(): Promise<IsSuccessType> {
-        const file = readFileSync('/Users/oleh/Desktop/e-photo-album/local/img.png')
+        const file = readFileSync('/Users/oleh/Desktop/e-photo-album/api/local/img.png')
         const blob = file.toString('base64')
         const graphqlQuery = {
             query: `

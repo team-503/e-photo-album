@@ -7,7 +7,7 @@ export class AuthService {
 
     async generateJwt(id: string | number): Promise<string> {
         return this.jwtService.signAsync({
-            sub: id,
+            userId: id,
         })
     }
 }

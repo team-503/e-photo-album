@@ -12,8 +12,8 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 export class UserResolver {
     constructor(private readonly userService: UserService) {}
 
-    @UseGuards(GqlAuthGuard)
     @Query(() => UserType)
+    @UseGuards(GqlAuthGuard)
     me(@CurrentUser() currentUser: UserType): Promise<UserType> {
         return this.userService.me(currentUser)
     }

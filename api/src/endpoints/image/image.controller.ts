@@ -13,4 +13,12 @@ export class ImageController {
         const fileStream = Readable.from(buffer)
         return new StreamableFile(fileStream)
     }
+
+    @Get('preview/:id')
+    @Header('Content-Type', 'image/png')
+    async getStaticImagePreview(@Param('id') id: number): Promise<StreamableFile> {
+        const buffer = await this.imageService.getStaticImagePreview(id)
+        const fileStream = Readable.from(buffer)
+        return new StreamableFile(fileStream)
+    }
 }
