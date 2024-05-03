@@ -1,68 +1,50 @@
+import { FormEmailField } from '@/components/form/form-email-field'
+import { FormPasswordField } from '@/components/form/form-password-field'
+import { FormSubmitButton } from '@/components/form/form-submit-button'
 import { PageWrapper } from '@/components/page-wrapper'
 import { Muted } from '@/components/typography/muted'
 import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Form } from '@/components/ui/form'
 import { UrlConfig } from '@/config/url.config'
 import { AuthCard } from '@/pages/auth/components/auth-card'
-import { FormEmailField } from '@/pages/auth/components/form-email-field'
-import { FormPasswordField } from '@/pages/auth/components/form-password-field'
-import { FormSubmitButton } from '@/pages/auth/components/form-submit-button'
-import { FormTextField } from '@/pages/auth/components/form-text-field'
-import { useRegister } from '@/pages/auth/hooks/use-register'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { RegisterFormSchemaType, useRegister } from '@/pages/auth/hooks/use-register'
 import { memo, useCallback } from 'react'
-import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
-import { z } from 'zod'
-
-const formSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(6),
-    fullName: z.string().min(2),
-})
-type FormSchemaType = z.infer<typeof formSchema>
 
 type RegisterPageProps = unknown
 export const RegisterPage: React.FC<RegisterPageProps> = memo(() => {
-    const { register, registerMutationData } = useRegister()
-    const form = useForm<FormSchemaType>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            email: '',
-            password: '',
-            fullName: '',
-        },
-    })
+    const { register, registerMutationData, registerForm } = useRegister()
+    const navigate = useNavigate()
 
     const onSubmit = useCallback(
-        async (values: FormSchemaType) => {
+        async (values: RegisterFormSchemaType) => {
             try {
-                register(UrlConfig.auth.register.url, {
+                register({
                     email: values.email,
                     password: values.password,
-                    fullName: values.fullName,
                 })
+                toast('Ви успішно зареєструвались!')
+                navigate(UrlConfig.app.url)
             } catch (error) {
                 toast('Помилка реєстрації, спробуйте пізніше')
             }
         },
-        [register],
+        [navigate, register],
     )
 
     return (
-        <PageWrapper breadcrumbs={[UrlConfig.main, UrlConfig.auth.register]} className="flex items-center justify-center">
+        <PageWrapper breadcrumbs={[UrlConfig.main, UrlConfig.register]} className="flex items-center justify-center">
             <AuthCard>
                 <CardHeader>
                     <CardTitle>Реєстрація</CardTitle>
                     <CardDescription>Створення нового облікового запису</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col space-y-5">
-                            <FormEmailField control={form.control} name="email" />
-                            <FormPasswordField control={form.control} name="password" />
-                            <FormTextField control={form.control} name="fullName" title="Повне імʼя" placeholder="John Doe" />
+                    <Form {...registerForm}>
+                        <form onSubmit={registerForm.handleSubmit(onSubmit)} className="flex flex-col space-y-5">
+                            <FormEmailField control={registerForm.control} name="email" />
+                            <FormPasswordField control={registerForm.control} name="password" />
                             <FormSubmitButton type="submit" isLoading={registerMutationData.loading}>
                                 Зареєструватись
                             </FormSubmitButton>
@@ -72,7 +54,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = memo(() => {
                 <CardFooter>
                     <Muted>
                         Вже є акаунт?{' '}
-                        <Link to={UrlConfig.auth.login.url} className="underline">
+                        <Link to={UrlConfig.login.url} className="underline">
                             Увійти
                         </Link>
                     </Muted>

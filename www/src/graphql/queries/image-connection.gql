@@ -1,0 +1,7 @@
+query ImageConnection($filters: ImageConnectionFiltersType) {
+    imageConnection(filters: $filters) {
+        fileName
+        location
+        id
+    }
+}

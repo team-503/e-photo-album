@@ -72,16 +72,17 @@ export class ImageService {
         return image.blobPreview
     }
 
-    async uploadImage(image: ImageInput, currentUser: UserEntity): Promise<ImageEntity> {
-        const inputBuffer = Buffer.from(image.blob, 'base64')
+    async uploadImage(image: ImageInput, currentUser: UserEntity): Promise<ImageType> {
+        const { blob: imageBlob, ...imageRest } = image
+        const inputBuffer = Buffer.from(imageBlob, 'base64')
         const [blob, blobPreview] = await Promise.all([
             sharp(inputBuffer).png().toBuffer(),
             sharp(inputBuffer).resize(this.compressionSize).png({ quality: this.compressionQuality }).toBuffer(),
         ])
         return this.imageEntity.save({
+            ...imageRest,
             blob,
             blobPreview,
-            location: image.location,
             user: currentUser,
         })
     }

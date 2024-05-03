@@ -1,4 +1,4 @@
-import { UserType } from '@/endpoints/user/dto/independent/user.type'
+import { UserType } from '@/endpoints/user/dto/user.type'
 import { Field, ObjectType } from '@nestjs/graphql'
 
 @ObjectType()

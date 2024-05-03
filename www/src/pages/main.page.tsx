@@ -1,7 +1,24 @@
+import { PageWrapper } from '@/components/page-wrapper'
+import { H1 } from '@/components/typography/h1'
+import { Muted } from '@/components/typography/muted'
+import { Button } from '@/components/ui/button'
+import { UrlConfig } from '@/config/url.config'
 import { memo } from 'react'
+import { Link } from 'react-router-dom'
 
 type MainPageProps = unknown
 export const MainPage: React.FC<MainPageProps> = memo(() => {
-    return <>Main page</>
+    return (
+        <PageWrapper className="relative flex flex-col items-center justify-center gap-10">
+            <div className="absolute h-1/2 w-1/2 rounded-full bg-violet-500 opacity-20 blur-[100px] dark:opacity-15" />
+            <div className="z-50 flex flex-col items-center justify-center gap-2">
+                <H1>E-photo-album</H1>
+                <Muted>By 503-team</Muted>
+            </div>
+            <Button asChild className="z-50">
+                <Link to={UrlConfig.app.url}>Browse your gallery</Link>
+            </Button>
+        </PageWrapper>
+    )
 })
 MainPage.displayName = 'MainPage'

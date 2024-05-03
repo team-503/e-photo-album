@@ -1,18 +1,32 @@
 import { LoginInput, useLoginMutation } from '@/__generated__/graphql'
 import { useUserStore } from '@/modules/user/stores/user.store'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useCallback } from 'react'
 import useSignIn from 'react-auth-kit/hooks/useSignIn'
-import { To, useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+
+const loginFormSchema = z.object({
+    email: z.string().email(),
+    password: z.string().min(6),
+})
+export type LoginFormSchemaType = z.infer<typeof loginFormSchema>
 
 export const useLogin = () => {
-    const [loginMutatoin, loginMutatoinData] = useLoginMutation()
+    const [mutation, mutationData] = useLoginMutation()
     const signIn = useSignIn()
     const setUser = useUserStore(state => state.setUser)
-    const navigate = useNavigate()
+    const form = useForm<LoginFormSchemaType>({
+        resolver: zodResolver(loginFormSchema),
+        defaultValues: {
+            email: '',
+            password: '',
+        },
+    })
 
     const login = useCallback(
-        async (url: To, user: LoginInput) => {
-            const res = await loginMutatoin({
+        async (user: LoginInput) => {
+            const res = await mutation({
                 variables: {
                     user,
                 },
@@ -27,13 +41,13 @@ export const useLogin = () => {
                 },
             })
             setUser(res.data.login.user)
-            navigate(url)
         },
-        [loginMutatoin, navigate, setUser, signIn],
+        [mutation, setUser, signIn],
     )
 
     return {
         login,
-        loginMutatoinData,
+        loginMutatoinData: mutationData,
+        loginForm: form,
     } as const
 }

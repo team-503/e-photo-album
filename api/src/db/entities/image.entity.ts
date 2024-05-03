@@ -13,6 +13,9 @@ export class ImageEntity {
     @Column()
     blobPreview: Buffer
 
+    @Column()
+    fileName: string
+
     @Column({ nullable: true })
     location?: string
 

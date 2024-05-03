@@ -4,7 +4,7 @@ import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
 import { AUTH_TOKEN_KEY } from '@/config/auth.config'
 
 const httpLink = createHttpLink({
-    uri: `${import.meta.env.VITE_GRAPHQL_ENDPOINT}`,
+    uri: `${import.meta.env.VITE_API_URL}/graphql`,
 })
 
 const authLink = setContext((_, { headers }) => {

@@ -1,0 +1,6 @@
+query AlbumConnection {
+    albumConnection {
+        name
+        id
+    }
+}

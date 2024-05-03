@@ -13,8 +13,9 @@ type IsSuccessType {
 }
 
 type ImageType {
-  id: Int!
+  fileName: String!
   location: String
+  id: Int!
 }
 
 type UserType {
@@ -57,6 +58,7 @@ input RegisterInput {
 
 input ImageInput {
   blob: String!
+  fileName: String!
   location: String
 }
 

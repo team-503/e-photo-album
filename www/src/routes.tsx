@@ -1,6 +1,9 @@
 import { UrlConfig } from '@/config/url.config'
+import { AlreadyAuthLayout } from '@/layouts/already-auth.layout'
+import { AppLayout } from '@/layouts/app.layout'
 import { AuthLayout } from '@/layouts/auth.layout'
 import { MainLayout } from '@/layouts/main.layout'
+import { AppPage } from '@/pages/app/app.page'
 import { LoginPage } from '@/pages/auth/login.page'
 import { RegisterPage } from '@/pages/auth/register.page'
 import { ErrorPage } from '@/pages/error.page'
@@ -9,44 +12,40 @@ import { NotFoundPage } from '@/pages/not-found.page'
 import { memo } from 'react'
 import { useRoutes } from 'react-router-dom'
 
-export interface RoutesProps {}
-export const Routes: React.FC<RoutesProps> = memo(() => {
-    return useRoutes([
-        {
-            path: UrlConfig.main.url,
-            element: <MainLayout />,
-            children: [
-                {
-                    path: UrlConfig.app.url,
-                    element: <AuthLayout />,
-                    children: [
-                        // authenticated
-                    ],
-                },
-                // non-authenticated
-                {
-                    path: UrlConfig.main.url,
-                    element: <MainPage />,
-                },
-                {
-                    path: UrlConfig.auth.login.url,
-                    element: <LoginPage />,
-                },
-                {
-                    path: UrlConfig.auth.register.url,
-                    element: <RegisterPage />,
-                },
-                // other
-                {
-                    path: UrlConfig.error.url,
-                    element: <ErrorPage />,
-                },
-                {
-                    path: '*',
-                    element: <NotFoundPage />,
-                },
-            ],
-        },
-    ])
+type RoutesProps = {
+    location?: Parameters<typeof useRoutes>[1]
+}
+export const Routes: React.FC<RoutesProps> = memo(({ location }) => {
+    return useRoutes(
+        [
+            {
+                path: UrlConfig.main.url,
+                element: <MainLayout />,
+                children: [
+                    {
+                        element: <AuthLayout />,
+                        children: [
+                            {
+                                element: <AppLayout />,
+                                children: [{ path: UrlConfig.app.url, element: <AppPage /> }],
+                            },
+                        ],
+                    },
+                    {
+                        path: UrlConfig.auth.url,
+                        element: <AlreadyAuthLayout />,
+                        children: [
+                            { path: UrlConfig.login.url, element: <LoginPage /> },
+                            { path: UrlConfig.register.url, element: <RegisterPage /> },
+                        ],
+                    },
+                    { path: UrlConfig.main.url, element: <MainPage /> },
+                    { path: UrlConfig.error.url, element: <ErrorPage /> },
+                    { path: '*', element: <NotFoundPage /> },
+                ],
+            },
+        ],
+        location,
+    )
 })
 Routes.displayName = Routes.name
