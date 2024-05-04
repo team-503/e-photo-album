@@ -2,7 +2,7 @@ import { ArgsType, Field, Int } from '@nestjs/graphql'
 import { IsInt, IsNumber, IsOptional, Min } from 'class-validator'
 
 @ArgsType()
-export class CursorConnectionArg {
+export class CursorConnectionArgs {
     @Field(() => Int, { nullable: true, defaultValue: 10 })
     @IsNumber()
     @IsInt()

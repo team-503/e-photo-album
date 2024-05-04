@@ -23,5 +23,7 @@ export class ImageEntity {
     user: UserEntity
 
     @ManyToOne(() => AlbumEntity, album => album.images, { nullable: true })
-    album?: AlbumEntity
+    album?: AlbumEntity | null
 }
+
+export type ImageEntityCreate = Omit<ImageEntity, 'id'>

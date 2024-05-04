@@ -3,6 +3,7 @@ import { AlreadyAuthLayout } from '@/layouts/already-auth.layout'
 import { AppLayout } from '@/layouts/app.layout'
 import { AuthLayout } from '@/layouts/auth.layout'
 import { MainLayout } from '@/layouts/main.layout'
+import { AlbumIdPage } from '@/pages/app/albumId.page'
 import { AppPage } from '@/pages/app/app.page'
 import { LoginPage } from '@/pages/auth/login.page'
 import { RegisterPage } from '@/pages/auth/register.page'
@@ -27,7 +28,10 @@ export const Routes: React.FC<RoutesProps> = memo(({ location }) => {
                         children: [
                             {
                                 element: <AppLayout />,
-                                children: [{ path: UrlConfig.app.url, element: <AppPage /> }],
+                                children: [
+                                    { path: UrlConfig.app.url, element: <AppPage /> },
+                                    { path: UrlConfig.albumId.url, element: <AlbumIdPage /> },
+                                ],
                             },
                         ],
                     },

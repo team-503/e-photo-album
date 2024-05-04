@@ -1,7 +1,16 @@
-query ImageConnection($filters: ImageConnectionFiltersType) {
-    imageConnection(filters: $filters) {
-        fileName
-        location
-        id
+query ImageConnection($limit: Int, $albumId: Int) {
+    imageConnection(limit: $limit, albumId: $albumId) {
+        nodes {
+            fileName
+            location
+            id
+        }
+        pageInfo {
+            limit
+            hasNextPage
+            hasPrevPage
+            prevPageCursor
+            nextPageCursor
+        }
     }
 }

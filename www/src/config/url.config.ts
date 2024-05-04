@@ -37,4 +37,23 @@ export class UrlConfig {
         label: 'App',
         url: UrlConfig.appPrefix,
     }
+    public static albumId = {
+        label: 'Album',
+        url: `${UrlConfig.appPrefix}/album/:id`,
+        getDynamicUrl: (id: string | number): string => `${UrlConfig.appPrefix}/album/${id}`,
+    }
+}
+
+export class UrlConfigApi {
+    private static apiUrl = import.meta.env.VITE_API_URL
+    private static imageBaseUrl = `${this.apiUrl}/image`
+    private static imagePreviewBaseUrl = `${this.apiUrl}/image/preview`
+
+    public static image = {
+        getDynamicUrl: (id: string | number): string => `${UrlConfigApi.imageBaseUrl}/${id}`,
+    }
+
+    public static imagePreview = {
+        getDynamicUrl: (id: string | number): string => `${UrlConfigApi.imagePreviewBaseUrl}/${id}`,
+    }
 }

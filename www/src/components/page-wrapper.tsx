@@ -20,7 +20,7 @@ export const PageWrapper: React.FC<PageWrapperProps> = memo(({ breadcrumbs, cont
                         <Breadcrumb className={cn('py-5', container && 'container')}>
                             <BreadcrumbList>
                                 {breadcrumbs?.map((item, index, arr) => (
-                                    <Fragment key={item.url}>
+                                    <Fragment key={item.label}>
                                         <BreadcrumbItem>
                                             <BreadcrumbLink href={item.url}>{item.label}</BreadcrumbLink>
                                         </BreadcrumbItem>

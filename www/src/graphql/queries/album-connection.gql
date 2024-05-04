@@ -1,6 +1,15 @@
 query AlbumConnection {
     albumConnection {
-        name
-        id
+        nodes {
+            name
+            id
+        }
+        pageInfo {
+            limit
+            hasNextPage
+            hasPrevPage
+            prevPageCursor
+            nextPageCursor
+        }
     }
 }

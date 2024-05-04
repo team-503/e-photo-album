@@ -1,0 +1,6 @@
+mutation AddImageToAlbum($imageId: Int!, $albumId: Int!) {
+    addImageToAlbum(imageId: $imageId, albumId: $albumId) {
+        isSuccess
+        error
+    }
+}

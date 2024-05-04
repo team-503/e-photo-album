@@ -9,8 +9,8 @@ import { Link } from 'react-router-dom'
 type MainPageProps = unknown
 export const MainPage: React.FC<MainPageProps> = memo(() => {
     return (
-        <PageWrapper className="relative flex flex-col items-center justify-center gap-10">
-            <div className="absolute h-1/2 w-1/2 rounded-full bg-violet-500 opacity-20 blur-[100px] dark:opacity-15" />
+        <PageWrapper className="relative flex flex-col items-center justify-center gap-10 my-auto">
+            <div className="absolute h-1/2 w-1/2 rounded-full bg-violet-500/60 blur-[100px]" />
             <div className="z-50 flex flex-col items-center justify-center gap-2">
                 <H1>E-photo-album</H1>
                 <Muted>By 503-team</Muted>

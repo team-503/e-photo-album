@@ -1,0 +1,6 @@
+mutation RemoveImageFromAlbum($imageId: Int!, $albumId: Int!) {
+    removeImageFromAlbum(imageId: $imageId, albumId: $albumId) {
+        isSuccess
+        error
+    }
+}

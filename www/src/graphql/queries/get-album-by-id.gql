@@ -1,0 +1,6 @@
+query GetAlbumById($albumId: Int!) {
+    getAlbumById(id: $albumId) {
+        name
+        id
+    }
+}

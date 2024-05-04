@@ -2,9 +2,22 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type PageInfoType {
+  limit: Int!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  prevPageCursor: Int
+  nextPageCursor: Int
+}
+
 type AlbumType {
   name: String!
   id: Int!
+}
+
+type AlbumConnectionType {
+  nodes: [AlbumType!]!
+  pageInfo: PageInfoType!
 }
 
 type IsSuccessType {
@@ -16,6 +29,11 @@ type ImageType {
   fileName: String!
   location: String
   id: Int!
+}
+
+type ImageConnectionType {
+  nodes: [ImageType!]!
+  pageInfo: PageInfoType!
 }
 
 type UserType {
@@ -30,19 +48,19 @@ type AuthResponseType {
 
 type Query {
   me: UserType!
-  imageConnection(filters: ImageConnectionFiltersType): [ImageType!]!
-  triggerImageUploadFromBackend: IsSuccessType!
-  albumConnection: [AlbumType!]!
-}
-
-input ImageConnectionFiltersType {
-  albumId: Int
+  imageConnection(limit: Int = 10, albumId: Int): ImageConnectionType!
+  triggerImageUploadFromBackend(auth: String!): IsSuccessType!
+  albumConnection: AlbumConnectionType!
+  getAlbumById(id: Int!): AlbumType
 }
 
 type Mutation {
   login(user: LoginInput!): AuthResponseType!
   register(user: RegisterInput!): AuthResponseType!
   uploadImage(image: ImageInput!): ImageType!
+  addImageToAlbum(imageId: Int!, albumId: Int!): IsSuccessType!
+  removeImageFromAlbum(imageId: Int!, albumId: Int!): IsSuccessType!
+  deleteImage(imageId: Int!): IsSuccessType!
   createAlbum(album: AlbumInput!): AlbumType!
 }
 

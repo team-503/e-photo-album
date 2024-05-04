@@ -24,17 +24,20 @@ export const LoginPage: React.FC<LoginPageProps> = memo(() => {
                     email: values.email,
                     password: values.password,
                 })
-                toast('Ви успішно увійшли!')
+                toast.success('Ви успішно увійшли!')
                 navigate(UrlConfig.app.url)
             } catch (error) {
-                toast('Помилка входу, спробуйте пізніше')
+                toast.error('Помилка входу, спробуйте пізніше')
             }
         },
         [login, navigate],
     )
 
     return (
-        <PageWrapper breadcrumbs={[UrlConfig.main, UrlConfig.login]} className="flex items-center justify-center">
+        <PageWrapper
+            breadcrumbs={[UrlConfig.main, UrlConfig.login]}
+            className="flex h-[var(--h-screen)] items-center justify-center my-auto"
+        >
             <AuthCard>
                 <CardHeader>
                     <CardTitle>Логін</CardTitle>

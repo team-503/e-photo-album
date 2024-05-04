@@ -1,20 +1,30 @@
 import { CurrentUser } from '@/auth/decorators/current-user.decorator'
 import { GqlAuthGuard } from '@/auth/guards/gql-auth.guard'
+import { IdArgs } from '@/common/id.args'
 import { UserEntity } from '@/db/entities/user.entity'
 import { AlbumService } from '@/endpoints/album/album.service'
+import { AlbumConnectionType } from '@/endpoints/album/dto/album-connection.type'
 import { AlbumInput, AlbumType } from '@/endpoints/album/dto/album.type'
-import { ImageConnectionFiltersType } from '@/endpoints/image/dto/image-connection-filters.type'
 import { UseGuards } from '@nestjs/common'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { Maybe } from 'graphql/jsutils/Maybe'
 
 @Resolver()
 @UseGuards(GqlAuthGuard)
 export class AlbumResolver {
     constructor(private readonly albumService: AlbumService) {}
 
-    @Query(() => [AlbumType])
-    async albumConnection(@CurrentUser() currentUser: UserEntity): Promise<AlbumType[]> {
+    @Query(() => AlbumConnectionType)
+    async albumConnection(@CurrentUser() currentUser: UserEntity): Promise<AlbumConnectionType> {
         return this.albumService.albumConnection(currentUser)
+    }
+
+    @Query(() => AlbumType, { nullable: true })
+    async getAlbumById(
+        @Args({ type: () => IdArgs }) idArgs: IdArgs,
+        @CurrentUser() currentUser: UserEntity,
+    ): Promise<Maybe<AlbumType>> {
+        return this.albumService.getAlbumById(idArgs, currentUser)
     }
 
     @Mutation(() => AlbumType)

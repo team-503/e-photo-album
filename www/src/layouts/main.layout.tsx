@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom'
 type MainLayoutProps = unknown
 export const MainLayout: React.FC<MainLayoutProps> = memo(() => {
     return (
-        <section className="flex h-screen flex-col">
+        <section className="relative flex min-h-screen flex-col">
             <Header />
             <Outlet />
         </section>

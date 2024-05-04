@@ -1,0 +1,6 @@
+mutation DeleteImage($imageId: Int!) {
+    deleteImage(imageId: $imageId) {
+        isSuccess
+        error
+    }
+}

@@ -24,17 +24,17 @@ export const RegisterPage: React.FC<RegisterPageProps> = memo(() => {
                     email: values.email,
                     password: values.password,
                 })
-                toast('Ви успішно зареєструвались!')
+                toast.success('Ви успішно зареєструвались!')
                 navigate(UrlConfig.app.url)
             } catch (error) {
-                toast('Помилка реєстрації, спробуйте пізніше')
+                toast.error('Помилка реєстрації, спробуйте пізніше')
             }
         },
         [navigate, register],
     )
 
     return (
-        <PageWrapper breadcrumbs={[UrlConfig.main, UrlConfig.register]} className="flex items-center justify-center">
+        <PageWrapper breadcrumbs={[UrlConfig.main, UrlConfig.register]} className="flex items-center justify-center my-auto">
             <AuthCard>
                 <CardHeader>
                     <CardTitle>Реєстрація</CardTitle>
