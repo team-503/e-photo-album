@@ -4,9 +4,6 @@
 
 type PageInfoType {
   limit: Int!
-  hasNextPage: Boolean!
-  hasPrevPage: Boolean!
-  prevPageCursor: Int
   nextPageCursor: Int
 }
 
@@ -29,6 +26,7 @@ type ImageType {
   fileName: String!
   location: String
   id: Int!
+  createdAt: String!
 }
 
 type ImageConnectionType {
@@ -48,9 +46,9 @@ type AuthResponseType {
 
 type Query {
   me: UserType!
-  imageConnection(limit: Int = 10, albumId: Int): ImageConnectionType!
+  imageConnection(limit: Int! = 10, nextPageCursor: Int, albumId: Int, location: String): ImageConnectionType!
   triggerImageUploadFromBackend(auth: String!): IsSuccessType!
-  albumConnection: AlbumConnectionType!
+  albumConnection(limit: Int! = 10, nextPageCursor: Int): AlbumConnectionType!
   getAlbumById(id: Int!): AlbumType
 }
 

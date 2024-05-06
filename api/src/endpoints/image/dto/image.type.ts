@@ -26,4 +26,7 @@ export class ImageInput {
 export class ImageType extends OmitType(ImageInput, ['blob'] as const, ObjectType) {
     @Field(() => Int)
     id: number
+
+    @Field(() => String)
+    createdAt: Date
 }

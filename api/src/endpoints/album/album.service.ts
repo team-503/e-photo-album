@@ -1,12 +1,14 @@
+import { CursorConnectionArgs } from '@/common/cursor-connection.args'
 import { IdArgs } from '@/common/id.args'
 import { AlbumEntity } from '@/db/entities/album.entity'
 import { UserEntity } from '@/db/entities/user.entity'
 import { AlbumConnectionType } from '@/endpoints/album/dto/album-connection.type'
 import { AlbumInput, AlbumType } from '@/endpoints/album/dto/album.type'
+import { connectionAgg } from '@/utils/connection-agg'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Maybe } from 'graphql/jsutils/Maybe'
-import { Repository } from 'typeorm'
+import { MoreThan, Repository } from 'typeorm'
 
 @Injectable()
 export class AlbumService {
@@ -15,22 +17,19 @@ export class AlbumService {
         private readonly albumEntity: Repository<AlbumEntity>,
     ) {}
 
-    async albumConnection(currentUser: UserEntity): Promise<AlbumConnectionType> {
+    async albumConnection(args: CursorConnectionArgs, currentUser: UserEntity): Promise<AlbumConnectionType> {
         const nodes = await this.albumEntity.find({
             where: {
                 user: {
                     id: currentUser.id,
                 },
+                ...(args.nextPageCursor && {
+                    id: MoreThan(args.nextPageCursor || 0),
+                }),
             },
+            take: args.limit,
         })
-        return {
-            nodes,
-            pageInfo: {
-                limit: 10, // FIXME
-                hasPrevPage: false, // FIXME
-                hasNextPage: false, // FIXME
-            },
-        }
+        return connectionAgg(nodes, args)
     }
 
     async getAlbumById(idArgs: IdArgs, currentUser: UserEntity): Promise<Maybe<AlbumType>> {

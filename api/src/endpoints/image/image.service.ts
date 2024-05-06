@@ -1,3 +1,4 @@
+import { DEFAULT_LIMIT } from '@/common/constants'
 import { IsSuccessType } from '@/common/is-success.type'
 import { ImageEntity, ImageEntityCreate } from '@/db/entities/image.entity'
 import { UserEntity } from '@/db/entities/user.entity'
@@ -7,6 +8,7 @@ import { ImageConnectionFiltersArgs } from '@/endpoints/image/dto/image-connecti
 import { ImageConnectionType } from '@/endpoints/image/dto/image-connection.type'
 import { ImageInput, ImageType } from '@/endpoints/image/dto/image.type'
 import { RemoveImageFromAlbumArgs } from '@/endpoints/image/dto/remove-image-from-album.args'
+import { connectionAgg } from '@/utils/connection-agg'
 import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager'
 import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -14,7 +16,7 @@ import { Builder, StrictBuilder } from 'builder-pattern'
 import config from 'config'
 import ms from 'ms'
 import sharp from 'sharp'
-import { Repository } from 'typeorm'
+import { In, Like, MoreThan, Repository } from 'typeorm'
 
 @Injectable()
 export class ImageService {
@@ -32,27 +34,27 @@ export class ImageService {
         @Inject(CACHE_MANAGER) private cache: Cache,
     ) {}
 
-    async imageConnection(filters: ImageConnectionFiltersArgs, currentUser: UserEntity): Promise<ImageConnectionType> {
+    async imageConnection(args: ImageConnectionFiltersArgs, currentUser: UserEntity): Promise<ImageConnectionType> {
         const nodes = await this.imageEntity.find({
             where: {
                 user: {
                     id: currentUser.id,
                 },
-                ...(filters.albumId && {
+                ...(args.nextPageCursor && {
+                    id: MoreThan(args.nextPageCursor || 0),
+                }),
+                ...(args.albumId && {
                     album: {
-                        id: filters.albumId,
+                        id: args.albumId,
                     },
                 }),
+                ...(args.location && {
+                    location: Like(`%${args.location}%`),
+                }),
             },
+            take: args.limit,
         })
-        return {
-            nodes,
-            pageInfo: {
-                limit: filters.limit,
-                hasPrevPage: false, // FIXME
-                hasNextPage: false, // FIXME
-            },
-        }
+        return connectionAgg(nodes, args)
     }
 
     async getStaticImage(id: number): Promise<Buffer> {

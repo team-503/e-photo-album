@@ -1,5 +1,6 @@
 import { CurrentUser } from '@/auth/decorators/current-user.decorator'
 import { GqlAuthGuard } from '@/auth/guards/gql-auth.guard'
+import { CursorConnectionArgs } from '@/common/cursor-connection.args'
 import { IdArgs } from '@/common/id.args'
 import { UserEntity } from '@/db/entities/user.entity'
 import { AlbumService } from '@/endpoints/album/album.service'
@@ -15,8 +16,11 @@ export class AlbumResolver {
     constructor(private readonly albumService: AlbumService) {}
 
     @Query(() => AlbumConnectionType)
-    async albumConnection(@CurrentUser() currentUser: UserEntity): Promise<AlbumConnectionType> {
-        return this.albumService.albumConnection(currentUser)
+    async albumConnection(
+        @Args({ type: () => CursorConnectionArgs }) args: CursorConnectionArgs,
+        @CurrentUser() currentUser: UserEntity,
+    ): Promise<AlbumConnectionType> {
+        return this.albumService.albumConnection(args, currentUser)
     }
 
     @Query(() => AlbumType, { nullable: true })
