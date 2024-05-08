@@ -49,7 +49,7 @@ export class ImageService {
                     },
                 }),
                 ...(args.location && {
-                    location: Like(`%${args.location}%`),
+                    location: Like(`%${args.location.toLowerCase()}%`),
                 }),
                 ...(args.fileName && {
                     fileName: Like(`%${args.fileName}%`),
@@ -102,7 +102,7 @@ export class ImageService {
                 .blob(blob)
                 .blobPreview(blobPreview)
                 .fileName(image.fileName)
-                .location(image.location)
+                .location(image.location?.toLowerCase())
                 .user(currentUser)
                 .build(),
         )

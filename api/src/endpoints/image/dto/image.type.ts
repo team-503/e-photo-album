@@ -28,5 +28,5 @@ export class ImageType extends OmitType(ImageInput, ['blob'] as const, ObjectTyp
     id: number
 
     @Field(() => String)
-    createdAt: Date
+    createdAt: string
 }

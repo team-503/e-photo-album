@@ -21,8 +21,8 @@ export const ImageGallery: React.FC<ImageGalleryProps> = memo(({ album, classNam
     const [autoAnimateRef] = useAutoAnimate<HTMLDivElement>()
     const [location, setLocation] = useState<string>('')
     const [fileName, setFileName] = useState<string>('')
-    const locationDebounced = useDebounce(location, 300)
-    const fileNameDebounced = useDebounce(fileName, 300)
+    const locationDebounced = useDebounce(location, 500)
+    const fileNameDebounced = useDebounce(fileName, 500)
 
     useEffect(() => {
         imageConnectionQuery({

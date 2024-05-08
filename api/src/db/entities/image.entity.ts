@@ -21,7 +21,7 @@ export class ImageEntity {
     location?: string
 
     @CreateDateColumn()
-    createdAt: Date = new Date()
+    createdAt: string = new Date().toISOString()
 
     @ManyToOne(() => UserEntity, user => user.images, {
         onDelete: 'CASCADE',
