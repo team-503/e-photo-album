@@ -29,7 +29,7 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = memo(({ align, childr
                     <CurrentThemeIcon />
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align={align} className='space-y-1'>
+            <DropdownMenuContent align={align} className="space-y-1">
                 {Object.keys(ThemeIcons).map(theme => (
                     <DropdownMenuItem
                         key={theme}

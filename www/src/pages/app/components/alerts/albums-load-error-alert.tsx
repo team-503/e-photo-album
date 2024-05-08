@@ -5,7 +5,11 @@ import { memo } from 'react'
 
 type AlbumsLoadErrorALertProps = unknown
 export const AlbumsLoadErrorALert: React.FC<AlbumsLoadErrorALertProps> = memo(() => {
-    const { error } = useAlbumConnectionQuery()
+    const { error } = useAlbumConnectionQuery({
+        variables: {
+            limit: 1,
+        },
+    })
 
     if (!error) {
         return null

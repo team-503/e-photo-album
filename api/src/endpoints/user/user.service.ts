@@ -49,7 +49,7 @@ export class UserService {
             },
         })
         if (existingUser) {
-            throw new ConflictException('User already exists')
+            throw new ConflictException('User already exists!')
         }
         const saltOrRounds = config.get<number>('auth.saltOrRounds')
         const hash = await bcrypt.hash(userData.password, saltOrRounds)

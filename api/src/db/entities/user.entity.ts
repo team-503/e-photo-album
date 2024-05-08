@@ -13,9 +13,15 @@ export class UserEntity {
     @Column()
     password: string
 
-    @OneToMany(() => ImageEntity, image => image.user)
+    @OneToMany(() => ImageEntity, image => image.user, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
     images: ImageEntity[]
 
-    @OneToMany(() => AlbumEntity, album => album.user)
+    @OneToMany(() => AlbumEntity, album => album.user, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
     albums: AlbumEntity[]
 }

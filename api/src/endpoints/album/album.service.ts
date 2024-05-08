@@ -1,5 +1,6 @@
 import { CursorConnectionArgs } from '@/common/cursor-connection.args'
 import { IdArgs } from '@/common/id.args'
+import { IsSuccessType } from '@/common/is-success.type'
 import { AlbumEntity } from '@/db/entities/album.entity'
 import { UserEntity } from '@/db/entities/user.entity'
 import { AlbumConnectionType } from '@/endpoints/album/dto/album-connection.type'
@@ -45,5 +46,14 @@ export class AlbumService {
             ...album,
             user: currentUser,
         })
+    }
+
+    async removeAlbum(idArgs: IdArgs, currentUser: UserEntity): Promise<IsSuccessType> {
+        const result = await this.albumEntity.delete({
+            id: idArgs.id,
+        })
+        return {
+            isSuccess: result.affected === 1,
+        }
     }
 }

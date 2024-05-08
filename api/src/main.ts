@@ -14,13 +14,6 @@ const bootstrap = async () => {
     app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
     app.useGlobalPipes(new ValidationPipe())
 
-    process.on('uncaughtException', (error, origin) => {
-        console.error('uncaughtException: ', error, 'Origin:', origin)
-    })
-    process.on('unhandledRejection', (reason, promise) => {
-        console.error('Unhandled Rejection at:', promise, 'Reason:', reason)
-    })
-
     const port = config.get<number>('port') || 4000
     await app.listen(port)
 }

@@ -14,7 +14,7 @@ export const AlbumIdPage: React.FC<AlbumIdPageProps> = memo(() => {
     const { id } = useParams<{ id: string }>()
     const { data } = useGetAlbumByIdQuery({
         variables: {
-            albumId: Number(id) || -1,
+            getAlbumByIdId: Number(id) || -1,
         },
     })
 

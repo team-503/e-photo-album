@@ -1,5 +1,5 @@
-query GetAlbumById($albumId: Int!) {
-    getAlbumById(id: $albumId) {
+query GetAlbumById($getAlbumByIdId: Int!) {
+    getAlbumById(id: $getAlbumByIdId) {
         name
         id
     }

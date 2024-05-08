@@ -1,7 +1,7 @@
 import { AlbumEntity } from '@/db/entities/album.entity'
 import { UserEntity } from '@/db/entities/user.entity'
 import { OmitMethods } from '@/utils/type-helpers'
-import { BeforeInsert, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
 export class ImageEntity {
@@ -23,10 +23,17 @@ export class ImageEntity {
     @CreateDateColumn()
     createdAt: Date = new Date()
 
-    @ManyToOne(() => UserEntity, user => user.images)
+    @ManyToOne(() => UserEntity, user => user.images, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
     user: UserEntity
 
-    @ManyToOne(() => AlbumEntity, album => album.images, { nullable: true })
+    @ManyToOne(() => AlbumEntity, album => album.images, {
+        nullable: true,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
     album?: AlbumEntity | null
 }
 

@@ -10,9 +10,15 @@ export class AlbumEntity {
     @Column()
     name: string
 
-    @ManyToOne(() => UserEntity, user => user.albums)
+    @ManyToOne(() => UserEntity, user => user.albums, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
     user: UserEntity
 
-    @OneToMany(() => ImageEntity, image => image.album)
+    @OneToMany(() => ImageEntity, image => image.album, {
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
     images: ImageEntity[]
 }

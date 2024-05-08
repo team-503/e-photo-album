@@ -7,7 +7,7 @@ export class ImageController {
     constructor(private readonly imageService: ImageService) {}
 
     @Get(':id')
-    @Header('Content-Type', 'image/png')
+    @Header('Content-Type', 'image/webp')
     async getStaticImage(@Param('id') id: number): Promise<StreamableFile> {
         const buffer = await this.imageService.getStaticImage(id)
         const fileStream = Readable.from(buffer)
@@ -15,7 +15,7 @@ export class ImageController {
     }
 
     @Get('preview/:id')
-    @Header('Content-Type', 'image/png')
+    @Header('Content-Type', 'image/webp')
     async getStaticImagePreview(@Param('id') id: number): Promise<StreamableFile> {
         const buffer = await this.imageService.getStaticImagePreview(id)
         const fileStream = Readable.from(buffer)

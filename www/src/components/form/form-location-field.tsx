@@ -47,11 +47,11 @@ export const FormLocationField = <
             {...props}
             render={({ field }) => (
                 <FormItem>
-                    <FormLabel>Локація</FormLabel>
+                    <FormLabel>Location</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                             <SelectTrigger>
-                                <SelectValue placeholder="Оберіть область" />
+                                <SelectValue placeholder="Choose location" />
                             </SelectTrigger>
                         </FormControl>
                         <SelectContent>{LocationSelectItems}</SelectContent>

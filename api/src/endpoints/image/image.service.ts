@@ -51,6 +51,9 @@ export class ImageService {
                 ...(args.location && {
                     location: Like(`%${args.location}%`),
                 }),
+                ...(args.fileName && {
+                    fileName: Like(`%${args.fileName}%`),
+                }),
             },
             take: args.limit,
         })
@@ -91,8 +94,8 @@ export class ImageService {
     async uploadImage(image: ImageInput, currentUser: UserEntity): Promise<ImageType> {
         const inputBuffer = Buffer.from(image.blob, 'base64')
         const [blob, blobPreview] = await Promise.all([
-            sharp(inputBuffer).png().toBuffer(),
-            sharp(inputBuffer).resize(this.compressionSize).png({ quality: this.compressionQuality }).toBuffer(),
+            sharp(inputBuffer).webp().toBuffer(),
+            sharp(inputBuffer).resize(this.compressionSize).webp({ quality: this.compressionQuality }).toBuffer(),
         ])
         return this.imageEntity.save(
             StrictBuilder<ImageEntityCreate>()
@@ -128,11 +131,11 @@ export class ImageService {
     }
 
     async deleteImage(data: DeleteImageArgs, currentUser: UserEntity): Promise<IsSuccessType> {
-        await this.imageEntity.delete({
+        const result = await this.imageEntity.delete({
             id: data.imageId,
         })
         return {
-            isSuccess: true,
+            isSuccess: result.affected === 1,
         }
     }
 }

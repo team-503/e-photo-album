@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type IsSuccessType {
+  isSuccess: Boolean!
+  error: String
+}
+
 type PageInfoType {
   limit: Int!
   nextPageCursor: Int
@@ -15,11 +20,6 @@ type AlbumType {
 type AlbumConnectionType {
   nodes: [AlbumType!]!
   pageInfo: PageInfoType!
-}
-
-type IsSuccessType {
-  isSuccess: Boolean!
-  error: String
 }
 
 type ImageType {
@@ -46,7 +46,7 @@ type AuthResponseType {
 
 type Query {
   me: UserType!
-  imageConnection(limit: Int! = 10, nextPageCursor: Int, albumId: Int, location: String): ImageConnectionType!
+  imageConnection(limit: Int! = 10, nextPageCursor: Int, albumId: Int, fileName: String, location: String): ImageConnectionType!
   triggerImageUploadFromBackend(auth: String!): IsSuccessType!
   albumConnection(limit: Int! = 10, nextPageCursor: Int): AlbumConnectionType!
   getAlbumById(id: Int!): AlbumType
@@ -60,6 +60,7 @@ type Mutation {
   removeImageFromAlbum(imageId: Int!, albumId: Int!): IsSuccessType!
   deleteImage(imageId: Int!): IsSuccessType!
   createAlbum(album: AlbumInput!): AlbumType!
+  removeAlbum(id: Int!): IsSuccessType!
 }
 
 input LoginInput {

@@ -24,10 +24,10 @@ export const LoginPage: React.FC<LoginPageProps> = memo(() => {
                     email: values.email,
                     password: values.password,
                 })
-                toast.success('Ви успішно увійшли!')
+                toast.success('Log in successful')
                 navigate(UrlConfig.app.url)
             } catch (error) {
-                toast.error('Помилка входу, спробуйте пізніше')
+                toast.error('Unknow error occurred!')
             }
         },
         [login, navigate],
@@ -36,12 +36,12 @@ export const LoginPage: React.FC<LoginPageProps> = memo(() => {
     return (
         <PageWrapper
             breadcrumbs={[UrlConfig.main, UrlConfig.login]}
-            className="flex h-[var(--h-screen)] items-center justify-center my-auto"
+            className="my-auto flex h-[var(--h-screen)] items-center justify-center"
         >
             <AuthCard>
                 <CardHeader>
-                    <CardTitle>Логін</CardTitle>
-                    <CardDescription>Вхід в обліковий запис</CardDescription>
+                    <CardTitle>Log in</CardTitle>
+                    <CardDescription>Log in your account</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <Form {...loginForm}>
@@ -49,16 +49,16 @@ export const LoginPage: React.FC<LoginPageProps> = memo(() => {
                             <FormEmailField control={loginForm.control} name="email" />
                             <FormPasswordField control={loginForm.control} name="password" />
                             <FormSubmitButton type="submit" isLoading={loginMutatoinData.loading}>
-                                Увійти
+                                Log in
                             </FormSubmitButton>
                         </form>
                     </Form>
                 </CardContent>
                 <CardFooter>
                     <Muted>
-                        Немає акаунту?{' '}
+                        Don't have an account?{' '}
                         <Link to={UrlConfig.register.url} className="underline">
-                            Зареєструватись
+                            Register
                         </Link>
                     </Muted>
                 </CardFooter>

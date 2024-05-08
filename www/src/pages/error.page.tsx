@@ -8,7 +8,7 @@ export const ErrorPage: React.FC<ErrorPageProps> = memo(() => {
     return (
         <>
             <ThemeUpdater />
-            <PageWrapper className="my-auto flex items-center justify-center divide-x-4 divide-foreground">
+            <PageWrapper className="my-auto flex min-h-screen items-center justify-center divide-x-4 divide-foreground">
                 <H2 className="pr-5">500</H2>
                 <H2 className="pl-5">Unknown error occured</H2>
             </PageWrapper>

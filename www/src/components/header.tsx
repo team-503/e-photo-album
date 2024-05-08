@@ -15,7 +15,7 @@ export const Header: React.FC<HeaderProps> = memo(() => {
                 </Link>
                 <div className="flex items-center justify-end gap-3">
                     <ThemeSelector variant="outline" />
-                    <UserMenuButton variant="outline" align='end' />
+                    <UserMenuButton variant="outline" align="end" />
                 </div>
             </div>
         </header>

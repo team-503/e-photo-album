@@ -1,0 +1,6 @@
+mutation RemoveAlbum($removeAlbumId: Int!) {
+  removeAlbum(id: $removeAlbumId) {
+    isSuccess
+    error
+  }
+}

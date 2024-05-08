@@ -1,14 +1,11 @@
-query AlbumConnection {
-    albumConnection {
+query AlbumConnection($limit: Int!, $nextPageCursor: Int) {
+    albumConnection(limit: $limit, nextPageCursor: $nextPageCursor) {
         nodes {
             name
             id
         }
         pageInfo {
             limit
-            hasNextPage
-            hasPrevPage
-            prevPageCursor
             nextPageCursor
         }
     }

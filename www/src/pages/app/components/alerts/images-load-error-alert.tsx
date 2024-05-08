@@ -9,6 +9,7 @@ type ImagesLoadErrorALertProps = {
 export const ImagesLoadErrorALert: React.FC<ImagesLoadErrorALertProps> = memo(({ albumId }) => {
     const { error } = useImageConnectionQuery({
         variables: {
+            limit: 1000,
             ...(albumId ? { albumId } : {}),
         },
     })

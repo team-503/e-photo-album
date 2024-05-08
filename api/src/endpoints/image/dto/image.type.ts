@@ -8,7 +8,7 @@ export class ImageInput {
     @IsNotEmpty()
     @IsString()
     @IsBase64()
-    blob!: string
+    blob: string
 
     @Field(() => String)
     @IsNotEmpty()

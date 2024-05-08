@@ -1,15 +1,13 @@
-query ImageConnection($limit: Int, $albumId: Int) {
-    imageConnection(limit: $limit, albumId: $albumId) {
+query ImageConnection($limit: Int!, $nextPageCursor: Int, $albumId: Int, $fileName: String, $location: String) {
+    imageConnection(limit: $limit, nextPageCursor: $nextPageCursor, albumId: $albumId, fileName: $fileName, location: $location) {
         nodes {
             fileName
             location
             id
+            createdAt
         }
         pageInfo {
             limit
-            hasNextPage
-            hasPrevPage
-            prevPageCursor
             nextPageCursor
         }
     }

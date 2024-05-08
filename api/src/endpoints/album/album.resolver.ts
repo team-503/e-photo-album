@@ -2,6 +2,7 @@ import { CurrentUser } from '@/auth/decorators/current-user.decorator'
 import { GqlAuthGuard } from '@/auth/guards/gql-auth.guard'
 import { CursorConnectionArgs } from '@/common/cursor-connection.args'
 import { IdArgs } from '@/common/id.args'
+import { IsSuccessType } from '@/common/is-success.type'
 import { UserEntity } from '@/db/entities/user.entity'
 import { AlbumService } from '@/endpoints/album/album.service'
 import { AlbumConnectionType } from '@/endpoints/album/dto/album-connection.type'
@@ -37,5 +38,13 @@ export class AlbumResolver {
         @CurrentUser() currentUser: UserEntity,
     ): Promise<AlbumType> {
         return this.albumService.createAlbum(album, currentUser)
+    }
+
+    @Mutation(() => IsSuccessType)
+    async removeAlbum(
+        @Args({ type: () => IdArgs }) data: IdArgs,
+        @CurrentUser() currentUser: UserEntity,
+    ): Promise<IsSuccessType> {
+        return this.albumService.removeAlbum(data, currentUser)
     }
 }

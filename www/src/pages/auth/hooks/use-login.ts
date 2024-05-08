@@ -41,8 +41,9 @@ export const useLogin = () => {
                 },
             })
             setUser(res.data.login.user)
+            form.reset()
         },
-        [mutation, setUser, signIn],
+        [form, mutation, setUser, signIn],
     )
 
     return {

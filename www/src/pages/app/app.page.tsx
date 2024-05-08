@@ -1,5 +1,4 @@
 import { PageWrapper } from '@/components/page-wrapper'
-import { H1 } from '@/components/typography/h1'
 import { UrlConfig } from '@/config/url.config'
 import { AlbumsLoadErrorALert } from '@/pages/app/components/alerts/albums-load-error-alert'
 import { ImagesLoadErrorALert } from '@/pages/app/components/alerts/images-load-error-alert'
@@ -16,7 +15,7 @@ export const AppPage: React.FC<AppPageProps> = memo(() => {
         >
             <AlbumsLoadErrorALert />
             <ImagesLoadErrorALert />
-            <ImageGallery className='overflow-y-hidden pb-5' />
+            <ImageGallery className="overflow-y-hidden pb-5" />
         </PageWrapper>
     )
 })

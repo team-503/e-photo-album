@@ -15,5 +15,11 @@ export class ImageConnectionFiltersArgs extends CursorConnectionArgs {
     @IsOptional()
     @IsString()
     @IsNotEmpty()
+    fileName?: string | null
+
+    @Field(() => String, { nullable: true })
+    @IsOptional()
+    @IsString()
+    @IsNotEmpty()
     location?: string | null
 }

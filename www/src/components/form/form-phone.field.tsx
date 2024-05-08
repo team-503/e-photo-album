@@ -14,7 +14,7 @@ export const FormPhoneField = <
             {...props}
             render={({ field }) => (
                 <FormItem>
-                    <FormLabel>Номер телефону</FormLabel>
+                    <FormLabel>Phone</FormLabel>
                     <FormControl>
                         <Input {...field} type="tel" placeholder="+380123456789" />
                     </FormControl>

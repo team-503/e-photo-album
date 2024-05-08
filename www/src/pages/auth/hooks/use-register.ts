@@ -41,8 +41,9 @@ export const useRegister = () => {
                 },
             })
             setUser(res.data.register.user)
+            form.reset()
         },
-        [mutation, setUser, signIn],
+        [form, mutation, setUser, signIn],
     )
 
     return {
