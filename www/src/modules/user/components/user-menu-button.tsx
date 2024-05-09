@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { apolloClient } from '@/config/apollo.config'
 import { UrlConfig } from '@/config/url.config'
 import { useUserStore } from '@/modules/user/stores/user.store'
 import { User } from 'lucide-react'
@@ -18,6 +19,7 @@ export const UserMenuButton: React.FC<UserMenuButtonProps> = memo(({ align, chil
     const onLogOut = useCallback(() => {
         setUser(null)
         signOut()
+        apolloClient.cache.reset()
         navigate(UrlConfig.main.url)
     }, [navigate, setUser, signOut])
 
