@@ -97,11 +97,12 @@ export class ImageService {
             sharp(inputBuffer).webp().toBuffer(),
             sharp(inputBuffer).resize(this.compressionSize).webp({ quality: this.compressionQuality }).toBuffer(),
         ])
+        const fileNameWithoutExtension = image.fileName.split('.').slice(0, -1).join('.')
         return this.imageEntity.save(
             StrictBuilder<ImageEntityCreate>()
                 .blob(blob)
                 .blobPreview(blobPreview)
-                .fileName(image.fileName)
+                .fileName(fileNameWithoutExtension)
                 .location(image.location?.toLowerCase())
                 .user(currentUser)
                 .build(),

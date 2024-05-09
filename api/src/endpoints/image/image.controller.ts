@@ -23,7 +23,7 @@ export class ImageController {
     }
 
     @Get(':id/download')
-    @Header('Content-Type', 'image/png')
+    @Header('Content-Type', 'image/webp')
     @Header('Content-Disposition', 'attachment')
     async download(@Param('id') id: number): Promise<StreamableFile> {
         const buffer = await this.imageService.getStaticImage(id)
