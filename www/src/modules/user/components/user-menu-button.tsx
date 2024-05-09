@@ -1,9 +1,11 @@
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { UrlConfig } from '@/config/url.config'
 import { useUserStore } from '@/modules/user/stores/user.store'
 import { User } from 'lucide-react'
 import { memo, useCallback } from 'react'
 import useSignOut from 'react-auth-kit/hooks/useSignOut'
+import { useNavigate } from 'react-router-dom'
 
 type UserMenuButtonProps = React.ComponentProps<typeof Button> & {
     align?: React.ComponentProps<typeof DropdownMenuContent>['align']
@@ -11,11 +13,13 @@ type UserMenuButtonProps = React.ComponentProps<typeof Button> & {
 export const UserMenuButton: React.FC<UserMenuButtonProps> = memo(({ align, children, ...props }) => {
     const setUser = useUserStore(state => state.setUser)
     const signOut = useSignOut()
+    const navigate = useNavigate()
 
     const onLogOut = useCallback(() => {
         setUser(null)
         signOut()
-    }, [setUser, signOut])
+        navigate(UrlConfig.main.url)
+    }, [navigate, setUser, signOut])
 
     return (
         <DropdownMenu>

@@ -1,6 +1,5 @@
 import { PageWrapper } from '@/components/page-wrapper'
 import { H1 } from '@/components/typography/h1'
-import { Muted } from '@/components/typography/muted'
 import { Button } from '@/components/ui/button'
 import { UrlConfig } from '@/config/url.config'
 import { memo } from 'react'
@@ -13,7 +12,6 @@ export const MainPage: React.FC<MainPageProps> = memo(() => {
             <div className="absolute h-1/2 w-1/2 rounded-full bg-violet-500/60 blur-[100px]" />
             <div className="z-50 flex flex-col items-center justify-center gap-2">
                 <H1>E-photo-album</H1>
-                <Muted>By 503-team</Muted>
             </div>
             <Button asChild className="z-50">
                 <Link to={UrlConfig.app.url}>Browse your gallery</Link>
