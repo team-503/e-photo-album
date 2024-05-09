@@ -14,10 +14,19 @@ export class ImageController {
         return new StreamableFile(fileStream)
     }
 
-    @Get('preview/:id')
+    @Get(':id/preview')
     @Header('Content-Type', 'image/webp')
     async getStaticImagePreview(@Param('id') id: number): Promise<StreamableFile> {
         const buffer = await this.imageService.getStaticImagePreview(id)
+        const fileStream = Readable.from(buffer)
+        return new StreamableFile(fileStream)
+    }
+
+    @Get(':id/download')
+    @Header('Content-Type', 'image/png')
+    @Header('Content-Disposition', 'attachment')
+    async download(@Param('id') id: number): Promise<StreamableFile> {
+        const buffer = await this.imageService.getStaticImage(id)
         const fileStream = Readable.from(buffer)
         return new StreamableFile(fileStream)
     }

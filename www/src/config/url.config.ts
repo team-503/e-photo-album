@@ -46,14 +46,14 @@ export class UrlConfig {
 
 export class UrlConfigApi {
     private static apiUrl = import.meta.env.VITE_API_URL
-    private static imageBaseUrl = `${this.apiUrl}/image`
-    private static imagePreviewBaseUrl = `${this.apiUrl}/image/preview`
 
     public static image = {
-        getDynamicUrl: (id: string | number): string => `${UrlConfigApi.imageBaseUrl}/${id}`,
+        getDynamicUrl: (id: string | number): string => `${this.apiUrl}/image/${id}/preview`,
     }
-
     public static imagePreview = {
-        getDynamicUrl: (id: string | number): string => `${UrlConfigApi.imagePreviewBaseUrl}/${id}`,
+        getDynamicUrl: (id: string | number): string => `${this.apiUrl}/image/${id}/preview`,
+    }
+    public static imageDownload = {
+        getDynamicUrl: (id: string | number): string => `${this.apiUrl}/image/${id}/download`,
     }
 }

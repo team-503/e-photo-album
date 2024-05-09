@@ -18,6 +18,7 @@ import {
     ContextMenuSubTrigger,
     ContextMenuTrigger,
 } from '@/components/ui/context-menu'
+import { UrlConfigApi } from '@/config/url.config'
 import { Loader2, Trash } from 'lucide-react'
 import { memo, useCallback } from 'react'
 import { toast } from 'sonner'
@@ -91,7 +92,12 @@ export const ImageCardContextMenu: React.FC<ImageCardContextMenuProps> = memo(({
                 imageId: image.id,
             },
             refetchQueries: [
-                { query: ImageConnectionDocument },
+                {
+                    query: ImageConnectionDocument,
+                    variables: {
+                        limit: 1000,
+                    },
+                },
                 {
                     query: ImageConnectionDocument,
                     variables: {
@@ -155,6 +161,11 @@ export const ImageCardContextMenu: React.FC<ImageCardContextMenuProps> = memo(({
                     </Show.When>
                 </Show>
                 <ContextMenuSeparator />
+                <ContextMenuItem asChild inset>
+                    <a download={image.fileName} href={UrlConfigApi.imageDownload.getDynamicUrl(image.id)}>
+                        Download
+                    </a>
+                </ContextMenuItem>
                 <ContextMenuItem onSelect={onDelete}>
                     <Trash className="mr-2 h-4 w-4" />
                     Delete
