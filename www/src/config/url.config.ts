@@ -48,7 +48,7 @@ export class UrlConfigApi {
     private static apiUrl = import.meta.env.VITE_API_URL
 
     public static image = {
-        getDynamicUrl: (id: string | number): string => `${this.apiUrl}/image/${id}/preview`,
+        getDynamicUrl: (id: string | number): string => `${this.apiUrl}/image/${id}`,
     }
     public static imagePreview = {
         getDynamicUrl: (id: string | number): string => `${this.apiUrl}/image/${id}/preview`,
